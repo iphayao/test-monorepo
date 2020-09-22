@@ -18,9 +18,17 @@ pipeline {
     agent any
 
     stages {
-        stage('Validate File Change') { 
+        stage('test-monorepo-foo') { 
             steps {
+                echo 'Validate changes on "test-monorepo-foo" project'
                 echo validateFileChange('test-monorepo-foo')
+                
+            }
+        }
+        
+        stage('test-monorepo-bar') {
+            staps {
+                echo 'Validate changes on "test-monorepo-bar" project'
                 echo validateFileChange('test-monorepo-bar')
             }
         }

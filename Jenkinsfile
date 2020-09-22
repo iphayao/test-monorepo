@@ -1,4 +1,4 @@
-pipline {
+pipeline {
     agent {
         docker 'maven:3-alpine'
         args: '-v /root/.m2:/root/.m2'

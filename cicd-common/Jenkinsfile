@@ -1,11 +1,17 @@
-String validateFileChange() {
+String validateFileChange(projectName) {
+    def res = false
     for(changeSet in currentBuild.changeSets) {
         for(entry in changeSet.getItems()) {
             for(file in entry.getAffectedFiles()) {
-                print file.getPath()
+                if(file.getPath().startWith(projectName)) {
+                    print 'Change occured in project ${projectName}'
+                    res = true
+                }
             }
         }
     }
+
+    return res
 }
 
 pipeline {
@@ -14,7 +20,8 @@ pipeline {
     stages {
         stage('Validate File Change') { 
             steps {
-                validateFileChange()
+                echo validateFileChange('test-monorepo-foo')
+                echo validateFileChange('test-monorepo-bar')
             }
         }
     }

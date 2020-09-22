@@ -2,7 +2,7 @@ String validateFileChange() {
     for(changeSet in currentBuild.changeSets) {
         for(entry in changeSet.getItems()) {
             for(file in entry.getAffectedFiles()) {
-                return file.getPath()
+                print file.getPath()
             }
         }
     }
@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Validate File Change') { 
             steps {
-                echo validateFileChange()
+                validateFileChange()
             }
         }
     }

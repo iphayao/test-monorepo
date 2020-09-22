@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Validate File Change') { 
+            steps {
+                echo "$GIT_PREVIOUS_COMMIT"
+                echo "$GIT_COMMIT"
+            }
+        }
+    }
+}

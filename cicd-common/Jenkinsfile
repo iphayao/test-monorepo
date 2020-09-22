@@ -27,7 +27,7 @@ pipeline {
         }
         
         stage('test-monorepo-bar') {
-            staps {
+            steps {
                 echo 'Validate changes on "test-monorepo-bar" project'
                 echo validateFileChange('test-monorepo-bar')
             }

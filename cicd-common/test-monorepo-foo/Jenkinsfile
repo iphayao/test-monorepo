@@ -6,27 +6,28 @@ pipeline {
         }
     }
     stages {
-        dir('test-monorepo-foo') {
-            stage('Build') { 
+        stage('Build') { 
+            dir('test-monorepo-foo') {
                 steps {
                     sh 'mvn -B -DskipTests clean package'
                 }
             }
-            stage('Test') {
-                steps {
-                    sh 'mvn test'
-                }
-                post {
-                    always {
-                        junit 'target/surefire-reports/*.xml'
-                    }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
                 }
             }
-            stage('Deliver') { 
-                steps {
-                    sh 'echo test' 
-                }
+        }
+        stage('Deliver') { 
+            steps {
+                sh 'echo test' 
             }
+        }
         }
     }
 }

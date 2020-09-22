@@ -20,8 +20,8 @@ pipeline {
                 }
             }
             post {
-                dir('test-monorepo-foo') {
-                    always {
+                always {
+                    dir('test-monorepo-foo') {
                         junit 'target/surefire-reports/*.xml'
                     }
                 }

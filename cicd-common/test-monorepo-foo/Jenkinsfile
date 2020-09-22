@@ -11,20 +11,20 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                dir(${projectName}) {
+                dir("${projectName}") {
                     sh 'mvn -B -DskipTests clean package'
                 }
             }
         }
         stage('Test') {
             steps {
-                dir(${projectName}) {
+                dir("${projectName}") {
                     sh 'mvn test'
                 }
             }
             post {
                 always {
-                    dir(${projectName}) {
+                    dir("${projectName}") {
                         junit 'target/surefire-reports/*.xml'
                     }
                 }
@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Deliver') { 
             steps {
-                dir(${projectName}) {
+                dir("${projectName}") {
                     sh 'echo test' 
                 }
             }

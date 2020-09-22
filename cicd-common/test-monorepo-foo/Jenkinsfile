@@ -1,3 +1,5 @@
+def projectName = 'test-monorepo-foo'
+
 pipeline {
     agent {
         docker {
@@ -6,27 +8,23 @@ pipeline {
         }
     }
 
-    environment {
-        PROJECT_NAME = 'test-monorepo-foo'
-    }
-
     stages {
         stage('Build') { 
             steps {
-                dir('test-monorepo-foo') {
+                dir('${projectName}') {
                     sh 'mvn -B -DskipTests clean package'
                 }
             }
         }
         stage('Test') {
             steps {
-                dir('test-monorepo-foo') {
+                dir('${projectName}') {
                     sh 'mvn test'
                 }
             }
             post {
                 always {
-                    dir('test-monorepo-foo') {
+                    dir('${projectName}') {
                         junit 'target/surefire-reports/*.xml'
                     }
                 }
@@ -34,7 +32,7 @@ pipeline {
         }
         stage('Deliver') { 
             steps {
-                dir('test-monorepo-foo') {
+                dir('${projectName}') {
                     sh 'echo test' 
                 }
             }

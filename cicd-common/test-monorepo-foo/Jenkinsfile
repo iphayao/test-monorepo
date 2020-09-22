@@ -5,23 +5,28 @@ pipeline {
             args '-v /root/.m2:/root/.m2' 
         }
     }
+
+    environment {
+        PROJECT_NAME = 'test-monorepo-foo'
+    }
+
     stages {
         stage('Build') { 
             steps {
-                dir('test-monorepo-foo') {
+                dir(${PROJECT_NAME}) {
                     sh 'mvn -B -DskipTests clean package'
                 }
             }
         }
         stage('Test') {
             steps {
-                dir('test-monorepo-foo') {
+                dir(${PROJECT_NAME}) {
                     sh 'mvn test'
                 }
             }
             post {
                 always {
-                    dir('test-monorepo-foo') {
+                    dir(${PROJECT_NAME}) {
                         junit 'target/surefire-reports/*.xml'
                     }
                 }
@@ -29,7 +34,7 @@ pipeline {
         }
         stage('Deliver') { 
             steps {
-                dir('test-monorepo-foo') {
+                dir(${PROJECT_NAME}) {
                     sh 'echo test' 
                 }
             }

@@ -1,16 +1,10 @@
 pipeline {
     agent any
 
-    environment {
-        GIT_PREVIOUS_COMMIT=$(git rev-parse --short "HEAD^")
-        GIT_COMMIT=$(git rev-parse --short HEAD)
-    }
-
     stages {
         stage('Validate File Change') { 
             steps {
-                echo "$GIT_PREVIOUS_COMMIT"
-                echo "$GIT_COMMIT"
+                echo currentBuild
             }
         }
     }

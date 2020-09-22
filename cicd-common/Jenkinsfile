@@ -3,7 +3,7 @@ String validateFileChange(projectName) {
     for(changeSet in currentBuild.changeSets) {
         for(entry in changeSet.getItems()) {
             for(file in entry.getAffectedFiles()) {
-                if(file.getPath().startWith(projectName)) {
+                if(file.getPath().startsWith(projectName)) {
                     print 'Change occured in project ${projectName}'
                     res = true
                 }

@@ -2,7 +2,7 @@ String validateFileChange() {
     for(changeSet in currentBuild.changeSets) {
         for(entry in changeSet.getItems()) {
             for(file in entry.getAffectedFiles()) {
-                return file
+                return file.gtePath()
             }
         }
     }

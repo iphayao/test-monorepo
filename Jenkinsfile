@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                dir('test-monorepo-foo) {
+                dir('test-monorepo-foo') {
                     sh 'mvn -B -DskipTests clean package' 
                 }
             }

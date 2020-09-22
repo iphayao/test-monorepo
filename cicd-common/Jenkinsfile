@@ -1,11 +1,11 @@
 String validateFileChange(projectName) {
-    def res = false
+    def res = 'false'
     for(changeSet in currentBuild.changeSets) {
         for(entry in changeSet.getItems()) {
             for(file in entry.getAffectedFiles()) {
                 if(file.getPath().startsWith(projectName)) {
                     print 'Change occured in project ${projectName}'
-                    res = true
+                    res = 'true'
                 }
             }
         }

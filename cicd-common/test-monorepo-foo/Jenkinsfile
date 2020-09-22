@@ -19,13 +19,17 @@ pipeline {
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'
+                    dir('test-monorepo-foo') {
+                        junit 'target/surefire-reports/*.xml'
+                    }
                 }
             }
         }
         stage('Deliver') { 
             steps {
-                sh 'echo test' 
+                dir('test-monorepo-foo') {
+                    sh 'echo test' 
+                }
             }
         }
     }

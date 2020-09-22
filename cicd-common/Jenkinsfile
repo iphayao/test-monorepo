@@ -1,5 +1,6 @@
 String validateFileChange(projectName) {
     def res = 'false'
+    print 'Validate change on "${projectName}" ...'
     for(changeSet in currentBuild.changeSets) {
         for(entry in changeSet.getItems()) {
             for(file in entry.getAffectedFiles()) {
@@ -17,19 +18,26 @@ String validateFileChange(projectName) {
 pipeline {
     agent any
 
+    environment {
+        TEST_MONOREPO_FOO_CHANGED = validateFileChange('test-monorepo-foo')
+        TEST_MONOREPO_BAR_CHANGED = validateFileChange('test-monorepo-bar')
+    }
+
     stages {
         stage('test-monorepo-foo') { 
+            when {
+                TEST_MONOREPO_FOO_CHANGED 'true'
+            }
             steps {
-                echo 'Validate changes on "test-monorepo-foo" project'
-                echo validateFileChange('test-monorepo-foo')
                 sh 'curl http://127.0.0.1:8080/job/test-monorepo-foo/build?token=test-monorepo-foo-build-token -u pruadm:1109bcb1f4e1d256bd56bb775ee2769c1c'
             }
         }
         
         stage('test-monorepo-bar') {
+            when {
+                TEST_MONOREPO_BAR_CHANGED 'true'
+            }
             steps {
-                echo 'Validate changes on "test-monorepo-bar" project'
-                echo validateFileChange('test-monorepo-bar')
                 sh 'curl http://127.0.0.1:8080/job/test-monorepo-bar/build?token=test-monorepo-bar-build-token -u pruadm:11329b5e21d68deb8992222794e4d40a70'
             }
         }

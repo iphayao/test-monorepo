@@ -31,7 +31,10 @@ pipeline {
                         environment name: 'TEST_MONOREPO_FOO_CHANGED', value: 'true'
                     }
                     steps {
-                        sh 'curl http://127.0.0.1:8080/job/test-monorepo-foo/build?token=test-monorepo-foo-build-token -u pruadm:1109bcb1f4e1d256bd56bb775ee2769c1c'
+                        script {
+                            build job: "test-monorepo-foo", wait: false
+                        }
+                        // sh 'curl http://127.0.0.1:8080/job/test-monorepo-foo/build?token=test-monorepo-foo-build-token -u pruadm:1109bcb1f4e1d256bd56bb775ee2769c1c'
                     }
                 }
                 
@@ -40,7 +43,10 @@ pipeline {
                         environment name: 'TEST_MONOREPO_BAR_CHANGED', value: 'true'
                     }
                     steps {
-                        sh 'curl http://127.0.0.1:8080/job/test-monorepo-bar/build?token=test-monorepo-bar-build-token -u pruadm:11329b5e21d68deb8992222794e4d40a70'
+                        script {
+                            build job: "test-monorepo-bar", wait: false
+                        }
+                        // sh 'curl http://127.0.0.1:8080/job/test-monorepo-bar/build?token=test-monorepo-bar-build-token -u pruadm:11329b5e21d68deb8992222794e4d40a70'
                     }
                 }
             }

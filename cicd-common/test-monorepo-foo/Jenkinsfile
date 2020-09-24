@@ -1,4 +1,4 @@
-final PROJECT_NAME = 'test-monorepo-foo'
+final PROJECT_NAME = env.JOB_BASE_NAME
 
 pipeline {
     agent {

@@ -1,0 +1,41 @@
+final PROJECT_NAME = env.JOB_BASE_NAME
+
+pipeline {
+    agent {
+        docker {
+            image 'maven:3-alpine' 
+            args '-v /root/.m2:/root/.m2' 
+        }
+    }
+
+    stages {
+        stage('Build') { 
+            steps {
+                dir("${PROJECT_NAME}") {
+                    sh 'mvn -B -DskipTests clean package'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                dir("${PROJECT_NAME}") {
+                    sh 'mvn test'
+                }
+            }
+            post {
+                always {
+                    dir("${PROJECT_NAME}") {
+                        junit 'target/surefire-reports/*.xml'
+                    }
+                }
+            }
+        }
+        stage('Deliver') { 
+            steps {
+                dir("${PROJECT_NAME}") {
+                    sh 'echo test' 
+                }
+            }
+        }
+    }
+}
